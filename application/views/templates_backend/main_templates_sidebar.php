@@ -77,6 +77,32 @@
                 </li>
             </ul>
         </li>
+		<li class="treeview <?=@$page_active == 'pelanggaran' ? 'active' : ''?>">
+            <a href="#">
+                <i class="fa fa-book"></i>
+                <span>Pelanggaran</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="<?=@$sub_page_active == 'pelanggaran' ? 'active' : ''?>"">
+                    <a href="<?=site_url('pelanggaran')?>">
+                        <i class="fa fa-book"></i> Data Pelanggaran
+                    </a>
+                </li>
+                <li class="<?=@$sub_page_active == 'kategori' ? 'active' : ''?>"">
+                    <a href="<?=site_url('kategori')?>">
+                        <i class="fa fa-tag"></i> Kategori Pelanggaran
+                    </a>
+                </li>
+				 <li class="<?=@$sub_page_active == 'pelanggaran/laporan_filter' ? 'active' : ''?>"">
+                    <a href="<?=site_url('pelanggaran/laporan_filter')?>">
+                        <i class="fa fa-print"></i> Laporan
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="treeview <?=@$page_active == 'laporan' ? 'active' : ''?>">
             <a href="#">
                 <i class="fa fa-list"></i>
