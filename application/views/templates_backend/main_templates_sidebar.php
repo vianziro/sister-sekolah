@@ -96,6 +96,11 @@
                         <i class="fa fa-tag"></i> Kategori Pelanggaran
                     </a>
                 </li>
+				<li class="<?=@$sub_page_active == 'subkategori' ? 'active' : ''?>"">
+                    <a href="<?=site_url('subkategori')?>">
+                        <i class="fa fa-tag"></i> Sub Kategori Pelanggaran
+                    </a>
+                </li>
 				 <li class="<?=@$sub_page_active == 'pelanggaran/laporan_filter' ? 'active' : ''?>"">
                     <a href="<?=site_url('pelanggaran/laporan_filter')?>">
                         <i class="fa fa-print"></i> Laporan
