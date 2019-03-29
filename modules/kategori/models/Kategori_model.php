@@ -59,8 +59,8 @@ class Kategori_model extends CI_Model
 
 	function update($data, $id)
 	{
-		$this->db->where('sekolah_id', $id);
-		$this->db->update('profil_sekolah', $data);
+		$this->db->where('id_kategori', $id);
+		$this->db->update('tbl_kategori', $data);
 		if($this->db->affected_rows() > 0)
 		{
 			return true;
@@ -73,8 +73,8 @@ class Kategori_model extends CI_Model
 
 	function delete($id)
 	{
-		$this->db->where('sekolah_id', $id);
-		$this->db->delete('profil_sekolah');
+		$this->db->where('id_kategori', $id);
+		$this->db->delete('tbl_kategori');
 		return true;
 	}
 

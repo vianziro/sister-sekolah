@@ -97,7 +97,7 @@
             	<h4>Apakah Anda yakin ? </h4>
             </div>
             <div class="modal-footer">
-            	<a href="<?=site_url('profil_sekolah')?>" id="btn-yes" class="btn btn-default">
+            	<a href="<?=site_url('kategori')?>" id="btn-yes" class="btn btn-default">
             		<i class="fa fa-check"></i> Ya, Saya Yakin
             	</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -111,7 +111,7 @@
 <script type="text/javascript">
 	function confirm_hapus(id)
 	{
-		$('#modal-hapus #btn-yes').attr({'href' : '<?=site_url('profil_sekolah/hapus')?>/' + id});
+		$('#modal-hapus #btn-yes').attr({'href' : '<?=site_url('kategori/hapus')?>/' + id});
 		$('#modal-hapus').modal();
 	}
 </script>
