@@ -46,7 +46,7 @@ class Kategori extends CI_Controller
 	public function form($id = '')
 	{
 		$param['msg']			= $this->session->flashdata('msg');
-		$param['id_kategori']			= $id;
+		$param['id']			= $id;
 
 		$last_data 	= $this->session->flashdata('last_data');
 		if(!empty($last_data))
@@ -67,7 +67,7 @@ class Kategori extends CI_Controller
 		$this->templates->load('main_templates', $param);
 	}
 
-	public function submit()
+	public function submit($id = '')
 	{
 		$data_post = $this->input->post();
 		$this->form_validation->set_rules('nama', 'Nama Kategori', 'required');
@@ -79,11 +79,16 @@ class Kategori extends CI_Controller
 		}
 		else
 		{
-			$param_user = array(
+			$data = array(
 				'nama_pelanggaran' 		=> $data_post['nama']
 			);
-			$this->kategori_model->insert($param_user);	
-			$this->session->set_flashdata('msg', suc_msg('Data berhasil disimpan.'));
+			if(empty($id)){			
+				$this->kategori_model->insert($data);	
+				$this->session->set_flashdata('msg', suc_msg('Data berhasil disimpan.'));
+			}else{
+				$this->kategori_model->update($data, $id);			
+				$this->session->set_flashdata('msg', suc_msg('Data berhasil diperbaharui.'));
+			}
 		}
 		redirect('kategori');
 	}

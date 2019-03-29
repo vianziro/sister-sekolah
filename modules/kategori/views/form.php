@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="POST" action="<?=site_url('kategori/submit/')?>">
+<form class="form-horizontal" method="POST" action="<?=site_url('kategori/submit/'. $id)?>">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="box box-primary">
