@@ -38,25 +38,15 @@ class Kategori_model extends CI_Model
 
 	function get_data_row($id)
 	{
-		$this->db->select('
-			a.*,
-			b.user_id,
-			b.nama as user_nama,
-			b.email as user_email,
-			b.fcm as user_fcm,
-			c.nip as user_nip
-		');
-		$this->db->where('a.sekolah_id', $id);
-		$this->db->from('profil_sekolah a');
-		$this->db->join('user_kepala_sekolah c', 'c.sekolah_id = a.sekolah_id');
-		$this->db->join('user b', 'b.user_id = c.user_id');
+		$this->db->where('id_kategori', $id);
+		$this->db->from('tbl_kategori');
 		$query = $this->db->get();
 		return $query->row();
 	}
 
 	function insert($data)
 	{
-		$this->db->insert('profil_sekolah', $data);
+		$this->db->insert('tbl_kategori', $data);
 		if($this->db->affected_rows() > 0)
 		{
 			return true;

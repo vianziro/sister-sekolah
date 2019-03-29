@@ -7,7 +7,7 @@
     <div class="box-body">
     	<div class="row">
             <div class="col-md-9">
-                <a href="<?=site_url('profil_sekolah/form')?>" class="btn btn-default">
+                <a href="<?=site_url('kategori/form')?>" class="btn btn-default">
                     <i class="fa fa-plus hidden-xs"></i> Tambah
                 </a>
             </div>
