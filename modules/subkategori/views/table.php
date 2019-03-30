@@ -88,7 +88,7 @@
             	<h4>Apakah Anda yakin ? </h4>
             </div>
             <div class="modal-footer">
-            	<a href="<?=site_url('kategori')?>" id="btn-yes" class="btn btn-default">
+            	<a href="<?=site_url('subkategori')?>" id="btn-yes" class="btn btn-default">
             		<i class="fa fa-check"></i> Ya, Saya Yakin
             	</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">

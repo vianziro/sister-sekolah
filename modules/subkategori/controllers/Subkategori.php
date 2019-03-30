@@ -14,6 +14,7 @@ class Subkategori extends CI_Controller
 		}
 
 		$this->load->model('subkategori_model');
+		$this->load->model('kategori/kategori_model');
 		$this->page_active 		= 'pelanggaran';
 		$this->sub_page_active 	= 'subkategori';
 	}
@@ -60,7 +61,7 @@ class Subkategori extends CI_Controller
 				$param['data'] = $this->subkategori_model->get_data_row($id);
 			}
 		}
-
+		$param['opt_kategori']		= $this->kategori_model->get_opt();
 		$param['main_content']		= 'subkategori/form';
 		$param['page_active'] 		= $this->page_active;
 		$param['sub_page_active'] 	= $this->sub_page_active;
@@ -70,7 +71,9 @@ class Subkategori extends CI_Controller
 	public function submit($id = '')
 	{
 		$data_post = $this->input->post();
-		$this->form_validation->set_rules('nama', 'Nama Kategori', 'required');
+		$this->form_validation->set_rules('kategori', 'Kategori Pelanggaran', 'required');
+		$this->form_validation->set_rules('subkategori', 'Deskripsi Pelanggaran', 'required');
+		$this->form_validation->set_rules('point', 'Point', 'required');
 		if($this->form_validation->run() == false)
 		{
 			$this->session->set_flashdata('msg', err_msg(validation_errors()));
@@ -80,7 +83,9 @@ class Subkategori extends CI_Controller
 		else
 		{
 			$data = array(
-				'nama_pelanggaran' 		=> $data_post['nama']
+				'id_kategori' 		=> $data_post['kategori'],
+				'deskripsi_pelanggaran' 		=> $data_post['subkategori'],
+				'point_pelanggaran' 		=> $data_post['point']
 			);
 			if(empty($id)){			
 				$this->subkategori_model->insert($data);	
@@ -90,13 +95,13 @@ class Subkategori extends CI_Controller
 				$this->session->set_flashdata('msg', suc_msg('Data berhasil diperbaharui.'));
 			}
 		}
-		redirect('kategori');
+		redirect('subkategori');
 	}
 
 	public function hapus($id)
 	{
 		$proses = $this->subkategori_model->delete($id);
 		$this->session->set_flashdata('msg', suc_msg('Data berhasil dihapus.'));
-		redirect('kategori');
+		redirect('subkategori');
 	}
 }
