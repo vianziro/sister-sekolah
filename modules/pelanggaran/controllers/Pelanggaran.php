@@ -15,6 +15,7 @@ class Pelanggaran extends CI_Controller
 
 		$this->load->model('pelanggaran_model');
 		$this->load->model('kategori/kategori_model');
+		$this->load->model('subkategori/subkategori_model');
 		$this->page_active 		= 'pelanggaran';
 		$this->sub_page_active 	= 'pelanggaran';
 	}
@@ -61,7 +62,7 @@ class Pelanggaran extends CI_Controller
 				$param['data'] = $this->pelanggaran_model->get_data_row($id);
 			}
 		}
-		$param['opt_kategori']		= $this->kategori_model->get_opt();
+		$param['opt_kategori']		= $this->kategori_model->get_opt('Pilih Kategori');
 		$param['main_content']		= 'pelanggaran/form';
 		$param['page_active'] 		= $this->page_active;
 		$param['sub_page_active'] 	= $this->sub_page_active;
@@ -70,10 +71,14 @@ class Pelanggaran extends CI_Controller
 
 	public function submit($id = '')
 	{
+		$this->form_validation->set_rules('nama', 'Nama Siswa', 'required');
 		$data_post = $this->input->post();
-		$this->form_validation->set_rules('kategori', 'Kategori Pelanggaran', 'required');
-		$this->form_validation->set_rules('pelanggaran', 'Deskripsi Pelanggaran', 'required');
-		$this->form_validation->set_rules('point', 'Point', 'required');
+		$this->form_validation->set_rules('subkategori', 'Deskripsi Pelanggaran', 'required');
+		$this->form_validation->set_rules('point', 'Point Pelanggaran', 'required');
+		$this->form_validation->set_rules('tindak_lanjut', 'Tindak Lanjut', 'required');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
+		$this->form_validation->set_rules('guru', 'Guru', 'required');
+		
 		if($this->form_validation->run() == false)
 		{
 			$this->session->set_flashdata('msg', err_msg(validation_errors()));
@@ -83,9 +88,10 @@ class Pelanggaran extends CI_Controller
 		else
 		{
 			$data = array(
-				'id_kategori' 		=> $data_post['kategori'],
-				'deskripsi_pelanggaran' 		=> $data_post['pelanggaran'],
-				'point_pelanggaran' 		=> $data_post['point']
+				'subkategori' 		=> $data_post['subkategori'],
+				'point_pelanggaran' 		=> $data_post['point'],
+				'tindak_lanjut' 		=> $data_post['tindak_lanjut'],
+				'keterangan' 		=> $data_post['keterangan']
 			);
 			if(empty($id)){			
 				$this->pelanggaran_model->insert($data);	
@@ -104,4 +110,63 @@ class Pelanggaran extends CI_Controller
 		$this->session->set_flashdata('msg', suc_msg('Data berhasil dihapus.'));
 		redirect('pelanggaran');
 	}
+	
+	public function get_subkategori()
+	{
+		$selected	= $this->input->get('selected');
+		$kategori_id = $this->input->get('id_kategori');
+
+		$result[''] = 'Pilih Sub Kategori';
+		if(!empty($kategori_id))
+		{
+			$result 	= $this->subkategori_model->get_opt('Pilih Sub Kategori', $kategori_id);
+		}
+
+		echo form_dropdown('subkategori', $result, $selected, 'class="form-control" onchange="get_point(this.value)"');
+	}		
+	
+	public function get_point()
+	{
+		$subkategori_id = $this->input->get('id_subkategori');
+
+		$result= '';
+		if(!empty($subkategori_id))
+		{
+			$result 	= $this->subkategori_model->get_point($subkategori_id);
+		}
+
+		echo $result;
+	}
+	public function search()
+	{
+		$keyword = $this->uri->segment(3);
+		$new_keyword = urldecode($keyword);
+		$data = $this->pelanggaran_model->search($new_keyword);	
+		foreach($data->result() as $row)
+		{
+			//$result 	= $this->pelanggaran_model->get_opt('Pilih Guru', $row->sekolah_id);	
+			$arr['query'] = $new_keyword;
+			$arr['suggestions'][] = array(
+				'value'	=>$row->nama.' | '.$row->jenjang.' '.$row->nama_jurusan.' '.$row->nama_kelas.' | '.$row->nama_sekolah,
+				'nis'	=>$row->nis,
+				'kelas'	=>$row->jenjang.' '.$row->nama_jurusan.' '.$row->nama_kelas,
+				'sekolah'	=>$row->nama_sekolah,
+				'sekolah_id'	=>$row->sekolah_id,
+				//'guru'	=> form_dropdown('guru', $result, $selected, '', 'class="form-control"')
+			);
+		}
+		echo json_encode($arr);
+	}
+	public function get_guru()
+	{
+		$sekolah_id = $this->input->get('sekolah_id');
+
+		$result[''] = 'Pilih Guru';
+		if(!empty($sekolah_id))
+		{
+			$result 	= $this->pelanggaran_model->get_opt('Pilih Guru', $sekolah_id);
+		}
+
+		echo form_dropdown('guru', $result, '', 'class="form-control"');
+	}		
 }
