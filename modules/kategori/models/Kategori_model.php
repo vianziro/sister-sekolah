@@ -78,13 +78,17 @@ class Kategori_model extends CI_Model
 		return true;
 	}
 
-	function get_opt()
+	function get_opt($addon = '')
 	{
 		$this->db->order_by('nama_pelanggaran');
 		$this->db->from('tbl_kategori');
 		$query = $this->db->get();
 
 		$result = array();
+		if(!empty($addon))
+		{
+			$result['']	= $addon;
+		}
 		foreach($query->result() as $key => $c)
 		{
 			$result[$c->id_kategori] = $c->nama_pelanggaran;
