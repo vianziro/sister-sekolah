@@ -78,6 +78,36 @@ class Subkategori_model extends CI_Model
 		$this->db->delete('tbl_subkategori');
 		return true;
 	}
+	
+	function get_opt($addon = '', $kategori_id = '')
+	{
+		
 
+		$result = array();
+		if(!empty($addon))
+		{
+			$result['']	= $addon;
+		}
+		if(!empty($kategori_id))
+		{
+			$this->db->where('id_kategori', $kategori_id);
+		}
+		$this->db->order_by('deskripsi_pelanggaran');
+		$this->db->from('tbl_subkategori');
+		$query = $this->db->get();
+		foreach($query->result() as $key => $c)
+		{
+			$result[$c->id_subkategori] = $c->deskripsi_pelanggaran;
+		}
+		return $result;
+	}	
+	
+	function get_point($id)
+	{
+		$this->db->where('id_subkategori', $id);
+		$this->db->from('tbl_subkategori');
+		$query = $this->db->get();
+		return $query->row()->point_pelanggaran;
+	}
 	
 }
