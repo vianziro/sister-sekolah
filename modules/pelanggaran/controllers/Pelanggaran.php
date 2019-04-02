@@ -55,6 +55,7 @@ class Pelanggaran extends CI_Controller
 		{
 			$param['data'] = (object) $last_data;
 		}
+		/*
 		else
 		{
 			if(!empty($id))
@@ -62,8 +63,33 @@ class Pelanggaran extends CI_Controller
 				$param['data'] = $this->pelanggaran_model->get_data_row($id);
 			}
 		}
+		*/
 		$param['opt_kategori']		= $this->kategori_model->get_opt('Pilih Kategori');
 		$param['main_content']		= 'pelanggaran/form';
+		$param['page_active'] 		= $this->page_active;
+		$param['sub_page_active'] 	= $this->sub_page_active;
+		$this->templates->load('main_templates', $param);
+	}
+	
+	public function edit($id = '')
+	{
+		$param['msg']			= $this->session->flashdata('msg');
+		$param['id']			= $id;
+
+		$last_data 	= $this->session->flashdata('last_data');
+		if(!empty($last_data))
+		{
+			$param['data'] = (object) $last_data;
+		}
+		else
+		{
+			if(!empty($id))
+			{
+				$param['data'] = $this->pelanggaran_model->get_data_row($id);
+			}
+		}
+		//$param['opt_kategori']		= $this->kategori_model->get_opt('Pilih Kategori');
+		$param['main_content']		= 'pelanggaran/edit';
 		$param['page_active'] 		= $this->page_active;
 		$param['sub_page_active'] 	= $this->sub_page_active;
 		$this->templates->load('main_templates', $param);

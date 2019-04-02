@@ -18,6 +18,15 @@ class Pelanggaran_model extends CI_Model
 					$this->db->limit($param['limit']);
 				}
 			}
+			if(!empty($param['id_pelanggaran']))
+			{
+				$this->db->where('a.id_pelanggaran', $param['id_pelanggaran']);
+			}			
+
+			if(!empty($param['keyword']))
+			{
+				$this->db->like('nama', $param['keyword']);
+			}
 		}
 		$this->db->from('tbl_pelanggaransiswa a');
 		$this->db->join('tbl_subkategori b', 'a.subkategori = b.id_subkategori');
@@ -29,7 +38,7 @@ class Pelanggaran_model extends CI_Model
 
 	function get_data_row($id)
 	{
-		$this->db->where('id_subkategori', $id);
+		$this->db->where('id_pelanggaran', $id);
 		$this->db->from('tbl_pelanggaransiswa');
 		$query = $this->db->get();
 		return $query->row();
@@ -64,7 +73,7 @@ class Pelanggaran_model extends CI_Model
 
 	function delete($id)
 	{
-		$this->db->where('id_subkategori', $id);
+		$this->db->where('id_pelanggaran', $id);
 		$this->db->delete('tbl_pelanggaransiswa');
 		return true;
 	}

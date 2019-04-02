@@ -49,7 +49,7 @@
 						<?php foreach($data as $key => $c): ?>
 							<tr>
 								<td class="text-center">
-									<a href="<?=site_url('pelanggaran/form/' . $c->id_pelanggaran)?>" class="btn btn-default btn-xs" title="Perbaharui / Update">
+									<a href="<?=site_url('pelanggaran/edit/' . $c->id_pelanggaran)?>" class="btn btn-default btn-xs" title="Perbaharui / Update">
 										<i class="fa fa-edit"></i>
 									</a>
 									<a onclick="confirm_hapus('<?=$c->id_pelanggaran?>')" class="btn btn-default btn-xs" title="Hapus">
