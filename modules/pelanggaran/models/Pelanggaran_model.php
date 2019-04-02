@@ -80,6 +80,8 @@ class Pelanggaran_model extends CI_Model
 	
 	function search($new_keyword)
 	{
+		$level_user 	= $this->session->userdata('login_level');
+		$id_user 	 	= $this->session->userdata('login_uid');
 		$this->db->like('a.nama', $new_keyword);
 		$this->db->select('
 			a.*, 
@@ -94,6 +96,20 @@ class Pelanggaran_model extends CI_Model
 		$this->db->join('profil_sekolah c', 'c.sekolah_id = b.sekolah_id');
 		$this->db->join('master_kelas d', 'd.kelas_id = b.kelas_id');
 		$this->db->join('master_jurusan e', 'e.jurusan_id = d.jurusan_id');
+		if($level_user == 'guru')
+		{
+			$this->db->where('f.user_id', $id_user);
+			$this->db->join('user_guru f', 'f.sekolah_id = b.sekolah_id');			
+		}elseif($level_user == 'kepala sekolah')
+		{
+			$this->db->where('g.user_id', $id_user);
+			$this->db->join('user_kepala_sekolah g', 'g.sekolah_id = b.sekolah_id');
+		}
+		elseif($level_user == 'operator sekolah')
+		{
+			$this->db->where('h.user_id', $id_user);
+			$this->db->join('user_operator h', 'h.sekolah_id = b.sekolah_id');
+		}
 		$get = $this->db->get();
 		return $get;
 	}

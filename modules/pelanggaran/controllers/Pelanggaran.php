@@ -63,6 +63,9 @@ class Pelanggaran extends CI_Controller
 				$param['data'] = $this->pelanggaran_model->get_data_row($id);
 			}
 		}
+		
+		$param['level_user']		= $this->session->userdata('login_level');
+		$param['id_user']		= $this->session->userdata('login_uid');
 		*/
 		$param['opt_kategori']		= $this->kategori_model->get_opt('Pilih Kategori');
 		$param['main_content']		= 'pelanggaran/form';
