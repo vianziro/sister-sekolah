@@ -59,7 +59,7 @@ class Pelanggaran_model extends CI_Model
 
 	function update($data, $id)
 	{
-		$this->db->where('id_subkategori', $id);
+		$this->db->where('id_pelanggaran', $id);
 		$this->db->update('tbl_pelanggaransiswa', $data);
 		if($this->db->affected_rows() > 0)
 		{

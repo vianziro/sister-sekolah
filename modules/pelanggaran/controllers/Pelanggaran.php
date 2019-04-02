@@ -98,14 +98,19 @@ class Pelanggaran extends CI_Controller
 	public function submit($id = '')
 	{
 		$data_post = $this->input->post();
-		$this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required');
-		$this->form_validation->set_rules('subkategori', 'Deskripsi Pelanggaran', 'required');
-		$this->form_validation->set_rules('point', 'Point Pelanggaran', 'required');
-		$this->form_validation->set_rules('tanggal', 'Tanggal Pelanggaran', 'required');
-		$this->form_validation->set_rules('tindak_lanjut', 'Tindak Lanjut', 'required');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
-		$this->form_validation->set_rules('guru', 'Guru', 'required');
-		
+		if(empty($id)){
+			$this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required');
+			$this->form_validation->set_rules('subkategori', 'Deskripsi Pelanggaran', 'required');
+			$this->form_validation->set_rules('point', 'Point Pelanggaran', 'required');
+			$this->form_validation->set_rules('tanggal', 'Tanggal Pelanggaran', 'required');
+			$this->form_validation->set_rules('tindak_lanjut', 'Tindak Lanjut', 'required');
+			$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
+			$this->form_validation->set_rules('guru', 'Guru', 'required');
+		} else {
+			$this->form_validation->set_rules('tanggal', 'Tanggal Pelanggaran', 'required');
+			$this->form_validation->set_rules('tindak_lanjut', 'Tindak Lanjut', 'required');
+			$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
+		}
 		if($this->form_validation->run() == false)
 		{
 			$this->session->set_flashdata('msg', err_msg(validation_errors()));
@@ -114,20 +119,25 @@ class Pelanggaran extends CI_Controller
 		}
 		else
 		{
-			$data = array(
-				'nis' 		=> $data_post['nis'],
-				'kelas' 		=> $data_post['kelas'],
-				'tanggal_pelanggaran' 		=> $data_post['tanggal'],
-				'subkategori' 		=> $data_post['subkategori'],
-				'point_pelanggaran' 		=> $data_post['point'],
-				'tindak_lanjut' 		=> $data_post['tindak_lanjut'],
-				'keterangan' 		=> $data_post['keterangan'],
-				'guru_id' 		=> $data_post['guru']
-			);
-			if(empty($id)){			
+			if(empty($id)){
+				$data = array(
+					'nis' 		=> $data_post['nis'],
+					'kelas' 		=> $data_post['kelas'],
+					'tanggal_pelanggaran' 		=> $data_post['tanggal'],
+					'subkategori' 		=> $data_post['subkategori'],
+					'point_pelanggaran' 		=> $data_post['point'],
+					'tindak_lanjut' 		=> $data_post['tindak_lanjut'],
+					'keterangan' 		=> $data_post['keterangan'],
+					'guru_id' 		=> $data_post['guru']
+				);	
 				$this->pelanggaran_model->insert($data);	
 				$this->session->set_flashdata('msg', suc_msg('Data berhasil disimpan.'));
 			}else{
+				$data = array(
+					'tanggal_pelanggaran' 		=> $data_post['tanggal'],
+					'tindak_lanjut' 		=> $data_post['tindak_lanjut'],
+					'keterangan' 		=> $data_post['keterangan']
+				);	
 				$this->pelanggaran_model->update($data, $id);			
 				$this->session->set_flashdata('msg', suc_msg('Data berhasil diperbaharui.'));
 			}
