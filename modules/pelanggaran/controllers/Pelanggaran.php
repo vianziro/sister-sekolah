@@ -215,27 +215,10 @@ class Pelanggaran extends CI_Controller
 		echo form_dropdown('guru', $result, '', 'class="form-control"');
 	}		
 	
-	function laporan_filter(){
-        $pdf = new FPDF('l','mm','A5');
-        // membuat halaman baru
-        $pdf->AddPage();
-        // setting jenis font yang akan digunakan
-        $pdf->SetFont('Arial','B',16);
-        // mencetak string 
-        $pdf->Cell(190,7,'SEKOLAH MENENGAH KEJURUSAN NEEGRI 2 LANGSA',0,1,'C');
-        $pdf->SetFont('Arial','B',12);
-        $pdf->Cell(190,7,'DAFTAR SISWA KELAS IX JURUSAN REKAYASA PERANGKAT LUNAK',0,1,'C');
-        // Memberikan space kebawah agar tidak terlalu rapat
-        $pdf->Cell(10,7,'',0,1);
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(20,6,'NIS',1,0);
-        $pdf->Cell(85,6,'ALAMAT',1,0);
-        $pdf->SetFont('Arial','',10);
-        $mahasiswa = $this->db->get('user_siswa')->result();
-        foreach ($mahasiswa as $row){
-            $pdf->Cell(20,6,$row->nis,1,0);
-            $pdf->Cell(85,6,$row->alamat,1,0);
-        }
-        $pdf->Output();
-    }
+	public function cetak($id){
+		$semua = array(
+			'data' => $this->pelanggaran_model->cari_sekolah($id)
+		);
+        $this->load->view('pelanggaran/cetak',$semua);
+	}
 }

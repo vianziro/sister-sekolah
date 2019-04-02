@@ -5,6 +5,8 @@ class Pelanggaran_model extends CI_Model
 	
 	function get_data($param = array())
 	{
+		$level_user 	= $this->session->userdata('login_level');
+		$id_user 	 	= $this->session->userdata('login_uid');	
 		if(!empty($param))
 		{
 			if(!empty($param['limit']))
@@ -32,6 +34,20 @@ class Pelanggaran_model extends CI_Model
 		$this->db->join('tbl_subkategori b', 'a.subkategori = b.id_subkategori');
 		$this->db->join('user_siswa c', 'a.nis = c.nis');
 		$this->db->join('user d', 'c.user_id = d.user_id');
+		if($level_user == 'guru')
+		{
+			$this->db->where('f.user_id', $id_user);
+			$this->db->join('user_guru f', 'f.sekolah_id = c.sekolah_id');			
+		}elseif($level_user == 'kepala sekolah')
+		{
+			$this->db->where('g.user_id', $id_user);
+			$this->db->join('user_kepala_sekolah g', 'g.sekolah_id = c.sekolah_id');
+		}
+		elseif($level_user == 'operator sekolah')
+		{
+			$this->db->where('h.user_id', $id_user);
+			$this->db->join('user_operator h', 'h.sekolah_id = c.sekolah_id');
+		}
 		$get = $this->db->get();
 		return $get;
 	}
@@ -136,6 +152,20 @@ class Pelanggaran_model extends CI_Model
 		}
 		return $result;
 	}	
-
+	
+	function cari_sekolah($id)
+	{
+		$this->db->select('
+			a.*, 
+			b.*, 
+			c.*
+		');
+		$this->db->where('a.id_pelanggaran', $id);
+		$this->db->from('tbl_pelanggaransiswa a');
+		$this->db->join('user_siswa b', 'a.nis = b.nis');
+		$this->db->join('profil_sekolah c', 'c.sekolah_id = b.sekolah_id');
+		$get = $this->db->get();
+		return $get->result();
+	}
 	
 }

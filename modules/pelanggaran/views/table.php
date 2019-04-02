@@ -39,7 +39,7 @@
 						<th class="">Tanggal</th>
                         <th class="">Kejadian</th>
 						<th class="">Point</th>
-					
+						<th class="">Print</th>					
                    </tr>
 				</thead>
 				<tbody>
@@ -54,7 +54,7 @@
 									</a>
 									<a onclick="confirm_hapus('<?=$c->id_pelanggaran?>')" class="btn btn-default btn-xs" title="Hapus">
 										<i class="fa fa-trash"></i>
-									</a>
+									</a>	
 								</td>
                                 <td class="text-center"><?=$c->id_pelanggaran?></td>
                                 <td><?=$c->nis?></td>
@@ -63,7 +63,11 @@
 								<td><?=$c->tanggal_pelanggaran?></td>
 								<td><?=$c->deskripsi_pelanggaran?></td>
 								<td><?=$c->point_pelanggaran?></td>
-							              
+							    <td>
+									<a target="_blank" href="<?=site_url('pelanggaran/cetak/' . $c->id_pelanggaran)?>" class="btn btn-default btn-xs" title="Cetak PDF">
+										<i class="fa fa-print"></i>
+									</a>
+								</td>
 							</tr>
 						<?php 
 							endforeach; 
