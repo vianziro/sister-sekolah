@@ -34,9 +34,12 @@
 						<th class="col-md-1 text-center"></th>
                         <th class="text-center">No</th>
 						<th class="">NIS</th>
+						<th class="">Nama</th>
+						<th class="">Kelas</th>
+						<th class="">Tanggal</th>
                         <th class="">Kejadian</th>
 						<th class="">Point</th>
-						<!--<th class="">Tindak Lanjut</th>-->
+					
                    </tr>
 				</thead>
 				<tbody>
@@ -55,9 +58,12 @@
 								</td>
                                 <td class="text-center"><?=$c->id_pelanggaran?></td>
                                 <td><?=$c->nis?></td>
+								<td><?=$c->nama?></td>
+								<td><?=$c->kelas?></td>
+								<td><?=$c->tanggal_pelanggaran?></td>
 								<td><?=$c->deskripsi_pelanggaran?></td>
 								<td><?=$c->point_pelanggaran?></td>
-								<!--<td><?=$c->tindak_lanjut?></td>-->                  
+							              
 							</tr>
 						<?php 
 							endforeach; 

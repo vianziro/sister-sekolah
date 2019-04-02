@@ -46,6 +46,12 @@
 						</div>
 				    </div>
 					<div class="form-group">
+				        <label class="col-md-2 control-label">Tanggal *</label>
+				        <div class="col-md-8">
+							 <input name="tanggal" placeholder="Tanggal Pelanggaran" id="tanggal" class='form-control' type="date" value="<?php echo date('Y-m-d');?>"></input>
+						</div>
+				    </div>
+					<div class="form-group">
 				        <label class="col-md-2 control-label">Kejadian *</label>
 				        <div class="col-md-8">
 							<?=form_dropdown('kategori', $opt_kategori, @$data->id_kategori, 'class="form-control" onchange="get_subkategori(this.value)"')?>

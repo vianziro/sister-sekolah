@@ -71,10 +71,11 @@ class Pelanggaran extends CI_Controller
 
 	public function submit($id = '')
 	{
-		$this->form_validation->set_rules('nama', 'Nama Siswa', 'required');
 		$data_post = $this->input->post();
+		$this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required');
 		$this->form_validation->set_rules('subkategori', 'Deskripsi Pelanggaran', 'required');
 		$this->form_validation->set_rules('point', 'Point Pelanggaran', 'required');
+		$this->form_validation->set_rules('tanggal', 'Tanggal Pelanggaran', 'required');
 		$this->form_validation->set_rules('tindak_lanjut', 'Tindak Lanjut', 'required');
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 		$this->form_validation->set_rules('guru', 'Guru', 'required');
@@ -88,10 +89,14 @@ class Pelanggaran extends CI_Controller
 		else
 		{
 			$data = array(
+				'nis' 		=> $data_post['nis'],
+				'kelas' 		=> $data_post['kelas'],
+				'tanggal_pelanggaran' 		=> $data_post['tanggal'],
 				'subkategori' 		=> $data_post['subkategori'],
 				'point_pelanggaran' 		=> $data_post['point'],
 				'tindak_lanjut' 		=> $data_post['tindak_lanjut'],
-				'keterangan' 		=> $data_post['keterangan']
+				'keterangan' 		=> $data_post['keterangan'],
+				'guru_id' 		=> $data_post['guru']
 			);
 			if(empty($id)){			
 				$this->pelanggaran_model->insert($data);	

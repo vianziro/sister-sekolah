@@ -18,21 +18,11 @@ class Pelanggaran_model extends CI_Model
 					$this->db->limit($param['limit']);
 				}
 			}
-
-			if(!empty($param['id_subkategori']))
-			{
-				$this->db->where('id_subkategori', $param['id_subkategori']);
-			}			
-
-			if(!empty($param['keyword']))
-			{
-				$this->db->like('deskripsi_pelanggaran', $param['keyword']);
-			}
-
 		}
-		$this->db->order_by('id_subkategori','ASC');
-		$this->db->from('tbl_pelanggaransiswa');
-		$this->db->join('tbl_subkategori', 'tbl_pelanggaransiswa.subkategori = tbl_subkategori.id_subkategori');
+		$this->db->from('tbl_pelanggaransiswa a');
+		$this->db->join('tbl_subkategori b', 'a.subkategori = b.id_subkategori');
+		$this->db->join('user_siswa c', 'a.nis = c.nis');
+		$this->db->join('user d', 'c.user_id = d.user_id');
 		$get = $this->db->get();
 		return $get;
 	}
