@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Mar 2019 pada 11.23
+-- Waktu pembuatan: 02 Apr 2019 pada 09.36
 -- Versi server: 10.1.32-MariaDB
 -- Versi PHP: 5.6.36
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sibiko`
+-- Database: `sister-sekolah`
 --
 
 -- --------------------------------------------------------
@@ -37,8 +37,16 @@ CREATE TABLE `tbl_pelanggaransiswa` (
   `point_pelanggaran` int(3) NOT NULL,
   `tindak_lanjut` varchar(200) DEFAULT NULL,
   `keterangan` varchar(100) DEFAULT NULL,
-  `id_guru` int(3) NOT NULL
+  `guru_id` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `tbl_pelanggaransiswa`
+--
+
+INSERT INTO `tbl_pelanggaransiswa` (`id_pelanggaran`, `nis`, `kelas`, `tanggal_pelanggaran`, `subkategori`, `point_pelanggaran`, `tindak_lanjut`, `keterangan`, `guru_id`) VALUES
+(1, '102210123', '9 IPA A', '2019-04-02', 47, 10, 'Teguran Langsung', 'Proses', 2),
+(3, '5149', '10 IPS 2', '2019-04-02', 51, 11, 'Panggil', 'Belum Teratasi', 14);
 
 --
 -- Indexes for dumped tables
@@ -60,18 +68,7 @@ ALTER TABLE `tbl_pelanggaransiswa`
 -- AUTO_INCREMENT untuk tabel `tbl_pelanggaransiswa`
 --
 ALTER TABLE `tbl_pelanggaransiswa`
-  MODIFY `id_pelanggaran` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
---
-
---
--- Ketidakleluasaan untuk tabel `tbl_pelanggaransiswa`
---
-ALTER TABLE `tbl_pelanggaransiswa`
-  ADD CONSTRAINT `nis_pelanggaran` FOREIGN KEY (`nis`) REFERENCES `tbl_siswa` (`nis`),
-  ADD CONSTRAINT `subkategori` FOREIGN KEY (`subkategori`) REFERENCES `tbl_subkategori` (`id_subkategori`);
+  MODIFY `id_pelanggaran` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
