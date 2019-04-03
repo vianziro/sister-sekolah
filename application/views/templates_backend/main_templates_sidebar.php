@@ -106,6 +106,11 @@
                         <i class="fa fa-print"></i> Laporan
                     </a>
                 </li>
+				<li class="<?=@$sub_page_active == 'pelanggaran/laporan_per_siswa' ? 'active' : ''?>"">
+                    <a href="<?=site_url('pelanggaran/laporan_per_siswa')?>">
+                        <i class="fa fa-print"></i> Laporan Per Siswa
+                    </a>
+                </li>
             </ul>
         </li>
         <li class="treeview <?=@$page_active == 'laporan' ? 'active' : ''?>">
