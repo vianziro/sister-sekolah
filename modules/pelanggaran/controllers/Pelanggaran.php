@@ -17,6 +17,8 @@ class Pelanggaran extends CI_Controller
 		$this->load->model('pelanggaran_model');
 		$this->load->model('kategori/kategori_model');
 		$this->load->model('subkategori/subkategori_model');
+		$this->load->model('profil_sekolah/profil_sekolah_model');
+		$this->load->model('pengaturan_kelas/pengaturan_kelas_model');
 		$this->page_active 		= 'pelanggaran';
 		$this->sub_page_active 	= 'pelanggaran';
 	}
@@ -221,4 +223,65 @@ class Pelanggaran extends CI_Controller
 		);
         $this->load->view('pelanggaran/cetak',$semua);
 	}
+	public function laporan()
+	{
+		$param['sekolah']		= $this->input->get('sekolah');
+		$param['kelas']			= $this->input->get('kelas');
+		$param['tanggal_awal']	= $this->input->get('tanggal_awal');
+		if(empty($param['tanggal_awal']))
+		{
+			$param['tanggal_awal'] = date('Y-m-d', strtotime('-30 DAYS'));
+		}
+
+		$param['tanggal_akhir']	= $this->input->get('tanggal_akhir');
+		if(empty($param['tanggal_akhir']))
+		{
+			$param['tanggal_akhir'] = date('Y-m-d');
+		}
+
+		
+		$uri_segment		= 3;
+		$limit 				= 20;
+		$param['limit']		= $limit;
+		$param['offset']	= $this->uri->segment($uri_segment);
+		$param['data']			= $this->pelanggaran_model->get_data($param)->result();
+
+		unset($param['limit']);
+		unset($param['offset']);
+		$total_rows 			= $this->pelanggaran_model->get_data($param)->num_rows();
+		$param['pagination']	= paging('pelanggaran/laporan', $total_rows, $limit, $uri_segment);		
+
+		$param['opt_sekolah']	= $this->profil_sekolah_model->get_opt('Semua Sekolah');
+		$param['sekolah_label']	= 'Semua Sekolah';
+		if(!empty($param['sekolah']))
+		{
+			foreach($param['opt_sekolah'] as $key => $c)
+			{
+				if($key == $param['sekolah'])
+				{
+					$param['sekolah_label'] = $c;
+					break;
+				}
+			}
+		}
+
+		$param['kelas_label']	= 'Semua Kelas';
+		if(!empty($param['kelas']))
+		{
+			$data_kelas = $this->pengaturan_kelas_model->get_data(array('kelas_id' => $param['kelas']))->row();
+			$param['kelas_label'] 	= $data_kelas->jenjang . ' ' . $data_kelas->nama_jurusan . ' ' . $data_kelas->nama;
+		}
+		$param['main_content']		= 'pelanggaran/laporan';
+		$param['page_active'] 		= 'pelanggaran';
+		$param['sub_page_active'] 	= 'pelanggaran/laporan';
+		$this->templates->load('main_templates', $param);
+	}
+	/*
+	public function cetak_laporan($id){
+		$semua = array(
+			'data' => $this->pelanggaran_model->laporan($id)
+		);
+        $this->load->view('pelanggaran/cetak_laporan',$semua);
+	}
+	*/
 }

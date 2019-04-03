@@ -46,7 +46,10 @@
 					<?php 
 						if(!empty($data)){ 
 					?>
-						<?php foreach($data as $key => $c): ?>
+						<?php 
+							$no=1;
+							foreach($data as $key => $c): 
+						?>
 							<tr>
 								<td class="text-center">
 									<a href="<?=site_url('pelanggaran/edit/' . $c->id_pelanggaran)?>" class="btn btn-default btn-xs" title="Perbaharui / Update">
@@ -56,7 +59,7 @@
 										<i class="fa fa-trash"></i>
 									</a>	
 								</td>
-                                <td class="text-center"><?=$c->id_pelanggaran?></td>
+                                <td class="text-center"><?=$no?></td>
                                 <td><?=$c->nis?></td>
 								<td><?=$c->nama?></td>
 								<td><?=$c->kelas?></td>
@@ -70,6 +73,7 @@
 								</td>
 							</tr>
 						<?php 
+							$no++;
 							endforeach; 
 						?>
 					<?php } else { ?>

@@ -29,6 +29,21 @@ class Pelanggaran_model extends CI_Model
 			{
 				$this->db->like('nama', $param['keyword']);
 			}
+			if(!empty($param['sekolah']))
+			{
+				$this->db->where('c.sekolah_id', $param['sekolah']);
+			}
+			if(!empty($param['kelas']))
+			{
+				$this->db->where('c.kelas_id', $param['kelas']);
+			}
+	
+			if((!empty($param['tanggal_awal']))&&(!empty($param['tanggal_akhir']))&&($level_user =='administrator'))
+			{
+				$condition = "a.tanggal_pelanggaran BETWEEN " . "'" . $param['tanggal_awal'] . "'" . " AND " . "'" . $param['tanggal_akhir']. "' ORDER BY 'tanggal_pelanggaran' ASC";
+				$this->db->where($condition);
+			}
+
 		}
 		$this->db->from('tbl_pelanggaransiswa a');
 		$this->db->join('tbl_subkategori b', 'a.subkategori = b.id_subkategori');
@@ -51,6 +66,7 @@ class Pelanggaran_model extends CI_Model
 		$get = $this->db->get();
 		return $get;
 	}
+	
 
 	function get_data_row($id)
 	{
@@ -182,5 +198,6 @@ class Pelanggaran_model extends CI_Model
 		$get = $this->db->get();
 		return $get->result();
 	}
+	
 	
 }
