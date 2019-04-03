@@ -21,7 +21,7 @@ class Cetak extends FPDF
 						$this->setFillColor(255,255,255);
 						$this->cell(5,0,'',0,0,'C',0); 
 						$this->setFont('Arial','B',18);
-						$this->cell(0,8,$row->nama,0,1,'C',0); 
+						$this->cell(0,8,$row->nama_sekolah,0,1,'C',0); 
 						$this->setFont('Arial','',12);
 						$this->cell(5,5,'',0,0,'C',0); 
 						$this->cell(0,6,$row->alamat,0,1,'C',0); 
@@ -35,7 +35,6 @@ class Cetak extends FPDF
                 
                 
 	}
-	/*
 	function Content($data)
 	{
         $hari = array("Minggu","Senin","Selasa","Rabu","Kamis","Jum'at","Sabtu");
@@ -55,32 +54,14 @@ class Cetak extends FPDF
                 $this->cell(70,5,'1. Nama Lengkap',0,0,'L',1);
                 $this->cell(5,5,':',0,0,'L',1);
 
-                if (file_exists('file:///C:/xampp/htdocs/sibiko/assets/foto/'.$key->nis.'.jpg'))
-                {
-                    $foto = "$key->nis";
-                }
-                else {
-                    $foto = "default";
-                };
-
-                if (strlen($key->nis) != 11) {
-                    $nis1 = substr($key->nis, 0,5);
-                    $nis2 = substr($key->nis, 5, 4);
-                    $nis3 = substr($key->nis, -3);
-                } else{
-                    $nis1 = substr($key->nis, 0,5);
-                    $nis2 = substr($key->nis, 5, 3);
-                    $nis3 = substr($key->nis, -3);
-                };
-
                 $this->cell(80,5,$key->nama_siswa,0,0,'L',1);
-                $this->Image(base_url().'assets/foto/'.$foto.'.jpg', 165, 53,'30','40');
+                $this->Image(base_url().'assets/img/foto-profil/'.$key->foto.'', 165, 53,'30','40');
                 $this->Ln(5);
                 $this->cell(70,5,'2. NIS',0,0,'L',1);
                 $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(80,5,$nis1.'/'.$nis2.'.'.$nis3,0,0,'L',1);
+                $this->cell(80,5,$key->nis,0,0,'L',1);
                 $this->Ln(5);
-                $this->cell(70,5,'3. Tempat/Tanggal Lahir',0,0,'L',1);
+				$this->cell(70,5,'3. Tempat/Tanggal Lahir',0,0,'L',1);
                 $this->cell(5,5,':',0,0,'L',1);
                 $this->cell(80,5,$key->tempat_lahir_siswa .', '. date('j', strtotime(date($key->tanggal_lahir_siswa))).' '.$bulan[date('n',strtotime(date($key->tanggal_lahir_siswa)))].' '.date('Y', strtotime(date($key->tanggal_lahir_siswa))),0,0,'L',1);
                 $this->Ln(5);
@@ -88,21 +69,25 @@ class Cetak extends FPDF
                 $this->cell(5,5,':',0,0,'L',1);
                 $this->cell(80,5,$key->agama_siswa,0,0,'L',1);
                 $this->Ln(5);
-                $this->cell(70,5,'5. Kelas',0,0,'L',1);
+             
+				$this->cell(70,5,'5. Kelas',0,0,'L',1);
                 $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(80,5,$key->kelas_siswa,0,0,'L',1);
+                $this->cell(80,5,$key->jenjang.' '.$key->nama_jurusan.' '.$key->nama_kelas,0,0,'L',1);
                 $this->Ln(5);
+				/*
                 $this->cell(70,5,'6. Kompetensi Keahlian',0,0,'L',1);
                 $this->cell(5,5,':',0,0,'L',1);
                 $this->cell(80,5,$key->jurusan_siswa,0,0,'L',1);
                 $this->Ln(5);
-                $this->setFont('Arial','',10);
+				*/
+				$this->setFont('Arial','',10);
                 $this->cell(70,5,'7. Alamat ',0,0,'L',1);
                 $this->cell(5,5,':',0,0,'L',1);
                 $this->multicell(110,5,$key->alamat_siswa,0,'L','L',1);
                 $this->Ln(10);
-                $this->setFont('Arial','B',12);
-                $this->cell(0,5,'B. Keterangan Pelnaggaran',0,0,'L',1);
+                
+				$this->setFont('Arial','B',12);
+                $this->cell(0,5,'B. Keterangan Pelanggaran',0,0,'L',1);
                 $this->Ln(8);
                 $this->setFont('Arial','',10);
                 $this->cell(70,5,'Tanggal Kejadian ',0,0,'L',1);
@@ -111,7 +96,7 @@ class Cetak extends FPDF
                 $this->Ln(5);
                 $this->cell(70,5,'Kelas',0,0,'L',1);
                 $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(80,5,$key->kelas,0,0,'L',1);
+                $this->cell(80,5,$key->jenjang.' '.$key->nama_jurusan.' '.$key->nama_kelas,0,0,'L',1);
                 $this->Ln(5);
                 $this->cell(70,5,'Pelanggaran',0,0,'L',1);
                 $this->cell(5,5,':',0,0,'L',1);
@@ -124,13 +109,12 @@ class Cetak extends FPDF
                 $this->cell(5,5,':',0,0,'L',1);
                 $this->multicell(110,5,$key->tindak_lanjut,0,'L','L',1);
                 $this->Ln(5);
-                $this->cell(70,5,'Guru',0,0,'L',1);
+				$this->cell(70,5,'Guru',0,0,'L',1);
                 $this->cell(5,5,':',0,0,'L',1);
                 $this->cell(80,5,$key->nama_guru,0,0,'L',1);
-                }
+			}
                 
 	}
-	*/
 	function Footer()
 	{
 		$data = $GLOBALS['data'];
@@ -151,5 +135,5 @@ class Cetak extends FPDF
 $pdf = new Cetak();
 $pdf->AliasNbPages();
 $pdf->AddPage();
-//$pdf->Content($data);
+$pdf->Content($data);
 $pdf->Output();
