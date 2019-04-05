@@ -276,6 +276,40 @@ class Pelanggaran extends CI_Controller
 		$param['sub_page_active'] 	= 'pelanggaran/laporan';
 		$this->templates->load('main_templates', $param);
 	}
+	
+	public function laporan_per_siswa()
+	{
+		$param['nis']		= $this->input->get('nis');
+		$param['tanggal_awal']	= $this->input->get('tanggal_awal');
+		if(empty($param['tanggal_awal']))
+		{
+			$param['tanggal_awal'] = date('Y-m-d', strtotime('-30 DAYS'));
+		}
+
+		$param['tanggal_akhir']	= $this->input->get('tanggal_akhir');
+		if(empty($param['tanggal_akhir']))
+		{
+			$param['tanggal_akhir'] = date('Y-m-d');
+		}
+
+		
+		$uri_segment		= 3;
+		$limit 				= 20;
+		$param['limit']		= $limit;
+		$param['offset']	= $this->uri->segment($uri_segment);
+		$param['data']			= $this->pelanggaran_model->get_data($param)->result();
+
+		unset($param['limit']);
+		unset($param['offset']);
+		$total_rows 			= $this->pelanggaran_model->get_data($param)->num_rows();
+		$param['pagination']	= paging('pelanggaran/laporan_per_siswa', $total_rows, $limit, $uri_segment);		
+
+		
+		$param['main_content']		= 'pelanggaran/laporan_per_siswa';
+		$param['page_active'] 		= 'pelanggaran';
+		$param['sub_page_active'] 	= 'pelanggaran/laporan_per_siswa';
+		$this->templates->load('main_templates', $param);
+	}
 	/*
 	public function cetak_laporan($id){
 		$semua = array(

@@ -7,6 +7,14 @@ class Pelanggaran_model extends CI_Model
 	{
 		$level_user 	= $this->session->userdata('login_level');
 		$id_user 	 	= $this->session->userdata('login_uid');	
+		$this->db->select('
+			a.*, 
+			b.*,
+			c.*,
+			d.*,
+			h.*,
+			i.nama as nama_guru
+		');
 		if(!empty($param))
 		{
 			if(!empty($param['limit']))
@@ -37,7 +45,10 @@ class Pelanggaran_model extends CI_Model
 			{
 				$this->db->where('c.kelas_id', $param['kelas']);
 			}
-	
+			if(!empty($param['nis']))
+			{
+				$this->db->where('c.nis', $param['nis']);
+			}	
 			if((!empty($param['tanggal_awal']))&&(!empty($param['tanggal_akhir']))&&($level_user =='administrator'))
 			{
 				$condition = "a.tanggal_pelanggaran BETWEEN " . "'" . $param['tanggal_awal'] . "'" . " AND " . "'" . $param['tanggal_akhir']. "' ORDER BY 'tanggal_pelanggaran' ASC";
@@ -49,6 +60,8 @@ class Pelanggaran_model extends CI_Model
 		$this->db->join('tbl_subkategori b', 'a.subkategori = b.id_subkategori');
 		$this->db->join('user_siswa c', 'a.nis = c.nis');
 		$this->db->join('user d', 'c.user_id = d.user_id');
+		$this->db->join('user_guru h', 'h.guru_id = a.guru_id');
+		$this->db->join('user i', 'i.user_id = h.user_id');
 		if($level_user == 'guru')
 		{
 			$this->db->where('f.user_id', $id_user);
