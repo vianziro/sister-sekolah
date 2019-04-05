@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Apr 2019 pada 09.36
+-- Waktu pembuatan: 05 Apr 2019 pada 14.33
 -- Versi server: 10.1.32-MariaDB
 -- Versi PHP: 5.6.36
 
@@ -45,8 +45,10 @@ CREATE TABLE `tbl_pelanggaransiswa` (
 --
 
 INSERT INTO `tbl_pelanggaransiswa` (`id_pelanggaran`, `nis`, `kelas`, `tanggal_pelanggaran`, `subkategori`, `point_pelanggaran`, `tindak_lanjut`, `keterangan`, `guru_id`) VALUES
-(1, '102210123', '9 IPA A', '2019-04-02', 47, 10, 'Teguran Langsung', 'Proses', 2),
-(3, '5149', '10 IPS 2', '2019-04-02', 51, 11, 'Panggil', 'Belum Teratasi', 14);
+(1, '102210123', '9 IPA A', '2019-04-03', 47, 10, 'Teguran Langsung oleh Guru', 'Proses', 2),
+(3, '5149', '10 IPS 2', '2019-04-02', 51, 11, 'Panggil', 'Belum Teratasi', 14),
+(4, '102210055', '9 IPA A', '2019-04-03', 39, 10, 'Teguran', 'Teratasi', 1),
+(5, '102210123', '9 IPA A', '2019-04-05', 49, 10, 'memberikan Surat Peringatan Ke-1', 'Proses', 1);
 
 --
 -- Indexes for dumped tables
@@ -68,7 +70,7 @@ ALTER TABLE `tbl_pelanggaransiswa`
 -- AUTO_INCREMENT untuk tabel `tbl_pelanggaransiswa`
 --
 ALTER TABLE `tbl_pelanggaransiswa`
-  MODIFY `id_pelanggaran` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pelanggaran` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
