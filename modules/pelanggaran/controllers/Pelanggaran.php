@@ -298,6 +298,7 @@ class Pelanggaran extends CI_Controller
 		$param['limit']		= $limit;
 		$param['offset']	= $this->uri->segment($uri_segment);
 		$param['data']			= $this->pelanggaran_model->get_data($param)->result();
+				
 
 		unset($param['limit']);
 		unset($param['offset']);
@@ -310,12 +311,17 @@ class Pelanggaran extends CI_Controller
 		$param['sub_page_active'] 	= 'pelanggaran/laporan_per_siswa';
 		$this->templates->load('main_templates', $param);
 	}
-	/*
-	public function cetak_laporan($id){
+	
+	public function cetak_laporan_per_siswa($nis,$tanggal_awal,$tanggal_akhir){
+		$param['nis']		= $nis;
+		$param['tanggal_awal']	= $tanggal_awal;
+		$param['tanggal_akhir']	= $tanggal_akhir;
 		$semua = array(
-			'data' => $this->pelanggaran_model->laporan($id)
+			'data' => $this->pelanggaran_model->get_data($param)->result(),
+			'tanggal_awal' => $tanggal_awal,
+			'tanggal_akhir' => $tanggal_akhir
 		);
-        $this->load->view('pelanggaran/cetak_laporan',$semua);
+        $this->load->view('pelanggaran/cetak_laporan_per_siswa',$semua);
 	}
-	*/
+	
 }

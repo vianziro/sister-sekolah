@@ -212,5 +212,33 @@ class Pelanggaran_model extends CI_Model
 		return $get->result();
 	}
 	
-	
+	function laporan_per_siswa($nis)
+	{
+		$this->db->select('
+			a.*, 
+			b.*,
+			b.alamat as alamat_siswa,			
+			c.*,
+			c.nama as nama_sekolah,
+			d.nama as nama_siswa,
+			e.nama as nama_kelas,
+			e.jenjang,
+			f.nama as nama_jurusan,
+			g.*,
+			h.*,
+			i.nama as nama_guru
+		');
+		$this->db->where('a.nis', $nis);
+		$this->db->from('tbl_pelanggaransiswa a');
+		$this->db->join('user_siswa b', 'a.nis = b.nis');
+		$this->db->join('profil_sekolah c', 'c.sekolah_id = b.sekolah_id');
+		$this->db->join('user d', 'd.user_id = b.user_id');
+		$this->db->join('master_kelas e', 'e.kelas_id = b.kelas_id');
+		$this->db->join('master_jurusan f', 'f.jurusan_id = e.jurusan_id');
+		$this->db->join('tbl_subkategori g', 'g.id_subkategori = a.subkategori');
+		$this->db->join('user_guru h', 'h.guru_id = a.guru_id');
+		$this->db->join('user i', 'i.user_id = h.user_id');
+		$get = $this->db->get();
+		return $get->result();
+	}
 }

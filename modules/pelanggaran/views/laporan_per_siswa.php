@@ -66,6 +66,13 @@
 </div>
 <div class="box box-primary" id="laporan">
     <div class="box-body">
+	<?php
+		if (empty($data)){
+	?>
+		 <h4 class="text-center" style="margin: 3px;">Data Tidak Tersedia</h4>
+	<?php
+		}else{
+	?>	
         <h4 class="text-center" style="margin: 3px;">Laporan Pelanggaran Siswa</h4>
         <h4 class="text-center" style="margin: 3px;"><?=format_tanggal_indonesia($tanggal_awal)?> - <?=format_tanggal_indonesia($tanggal_akhir)?></h4>
        
@@ -223,14 +230,13 @@
                </table>
 				
 		
-		<!--
-		<?php if($sekolah_label != 'Semua Sekolah'){ ?>
+		<?php //if($sekolah_label != 'Semua Sekolah'){ ?>
 		<hr />
-		<a target="_blank" href="<?=site_url('pelanggaran/cetak_laporan/' . $sekolah)?>" class="btn btn-primary btn-block" title="Cetak PDF">
+		<a target="_blank" href="<?=site_url('pelanggaran/cetak_laporan_per_siswa/'. $nis.'/'.$tanggal_awal.'/'.$tanggal_akhir)?>" class="btn btn-primary btn-block" title="Cetak PDF">
 			<i class="fa fa-print"></i> Cetak Laporan
 		</a>
+		<?php //}?>
 		<?php }?>
-		-->
     </div>
 </div>
 
