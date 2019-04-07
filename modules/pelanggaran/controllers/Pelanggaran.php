@@ -324,4 +324,15 @@ class Pelanggaran extends CI_Controller
         $this->load->view('pelanggaran/cetak_laporan_per_siswa',$semua);
 	}
 	
+	public function cetak_laporan($tanggal_awal,$tanggal_akhir){
+		$param['tanggal_awal']	= $tanggal_awal;
+		$param['tanggal_akhir']	= $tanggal_akhir;
+		$semua = array(
+			'data' => $this->pelanggaran_model->get_data($param)->result(),
+			'tanggal_awal' => $tanggal_awal,
+			'tanggal_akhir' => $tanggal_akhir
+		);
+        $this->load->view('pelanggaran/cetak_laporan',$semua);
+	}
+	
 }

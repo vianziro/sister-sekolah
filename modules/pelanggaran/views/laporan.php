@@ -118,14 +118,10 @@
 				</tbody>
 			</table>
         <?=$pagination?>
-		<!--
-		<?php if($sekolah_label != 'Semua Sekolah'){ ?>
 		<hr />
-		<a target="_blank" href="<?=site_url('pelanggaran/cetak_laporan/' . $sekolah)?>" class="btn btn-primary btn-block" title="Cetak PDF">
+		<a target="_blank" href="<?=site_url('pelanggaran/cetak_laporan/'.$tanggal_awal.'/'.$tanggal_akhir)?>" class="btn btn-primary btn-block" title="Cetak PDF">
 			<i class="fa fa-print"></i> Cetak Laporan
 		</a>
-		<?php }?>
-		-->
     </div>
 </div>
 

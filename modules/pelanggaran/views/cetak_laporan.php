@@ -1,17 +1,13 @@
 <?php
-$GLOBALS["data"] = $data;
+//$GLOBALS["data"] = $data;
 class Cetak extends FPDF
 {
 	//Page header
 
     function Header()
 	{
+			/*
 			$data = $GLOBALS['data'];
-             //   $this->setFont('Arial','',10);
-             //   $this->setFillColor(255,255,255);
-             //   $this->cell(100,6,"Laporan daftar pegawai gubugkoding.com",0,0,'L',1); 
-             //   $this->cell(100,6,"Printed date : " . date('d/m/Y'),0,1,'R',1); 
-               
                 
                 if ($this->PageNo()>1) {
                      # code...
@@ -33,107 +29,79 @@ class Cetak extends FPDF
 					}
                  }
                 
-                
+                */
 	}
-	function Content($data)
+	function Content($data,$tanggal_awal,$tanggal_akhir)
 	{
+		$total = 0;	
         $hari = array("Minggu","Senin","Selasa","Rabu","Kamis","Jum'at","Sabtu");
         $bulan = array(1=>'Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember');
         //echo $hari[date("w")].", ".date("j")." ".$bulan[date("n")]." ".date("Y");
       
-                foreach ($data as $key) {
+                foreach($data as $row){
+						$nama = $row->nama;
+						$nis = $row->nis;
+						$nama = $row->nama;
+						$kelas = $row->kelas;
+						$alamat = $row->alamat;
+						$agama_siswa = $row->agama_siswa;
+						$foto = $row->foto;
+						$tempat_lahir_siswa = $row->tempat_lahir_siswa;
+						$tanggal_lahir_siswa = $row->tanggal_lahir_siswa;
+				}
                 $this->setFillColor(255,255,255);
                 $this->Ln(8);
                 $this->setFont('Arial','B',14);
                 $this->cell(0,8,'LAPORAN PELANGGARAN SISWA',0,1,'C',0); 
+                $this->Ln(1);
+				 $this->setFont('Arial','B',10);
+				$this->cell(0,8,format_tanggal_indonesia($tanggal_awal).' - '.format_tanggal_indonesia($tanggal_akhir),0,1,'C',0); 
                 $this->Ln(8);
-                $this->setFont('Arial','B',12);
-                $this->cell(0,5,'A. KETERANGAN TENTANG DIRI SISWA',0,0,'L',1);
-                $this->Ln(8);
-                $this->setFont('Arial','',10);
-                $this->cell(70,5,'1. Nama Lengkap',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
+				
+				$this->SetFont('Arial','B',10);	
+$this->SetFillColor(128,128,128);		
+$this->SetTextColor(255,255,255);
+$this->Cell(15,5,'No.',1,0,'C',TRUE);
+$this->Cell(45,5,'Nama Siswa',1,0,'C',TRUE);
+$this->Cell(25,5,'Kelas',1,0,'C',TRUE);
+$this->Cell(30,5,'Tanggal',1,0,'C',TRUE);
+$this->Cell(55,5,'Pelanggaran',1,0,'C',TRUE);
+$this->Cell(20,5,'Point',1,0,'C',TRUE);
 
-                $this->cell(80,5,$key->nama_siswa,0,0,'L',1);
-                $this->Image(base_url().'assets/img/foto-profil/'.$key->foto.'', 165, 53,'30','40');
-                $this->Ln(5);
-                $this->cell(70,5,'2. NIS',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(80,5,$key->nis,0,0,'L',1);
-                $this->Ln(5);
-				$this->cell(70,5,'3. Tempat/Tanggal Lahir',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(80,5,$key->tempat_lahir_siswa .', '. date('j', strtotime(date($key->tanggal_lahir_siswa))).' '.$bulan[date('n',strtotime(date($key->tanggal_lahir_siswa)))].' '.date('Y', strtotime(date($key->tanggal_lahir_siswa))),0,0,'L',1);
-                $this->Ln(5);
-                $this->cell(70,5,'4. Agama',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(80,5,$key->agama_siswa,0,0,'L',1);
-                $this->Ln(5);
-             
-				$this->cell(70,5,'5. Kelas',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(80,5,$key->jenjang.' '.$key->nama_jurusan.' '.$key->nama_kelas,0,0,'L',1);
-                $this->Ln(5);
-				/*
-                $this->cell(70,5,'6. Kompetensi Keahlian',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(80,5,$key->jurusan_siswa,0,0,'L',1);
-                $this->Ln(5);
-				*/
-				$this->setFont('Arial','',10);
-                $this->cell(70,5,'7. Alamat ',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->multicell(110,5,$key->alamat_siswa,0,'L','L',1);
-                $this->Ln(10);
-                
-				$this->setFont('Arial','B',12);
-                $this->cell(0,5,'B. Keterangan Pelanggaran',0,0,'L',1);
-                $this->Ln(8);
-                $this->setFont('Arial','',10);
-                $this->cell(70,5,'Tanggal Kejadian ',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(80,5,date('j', strtotime(date($key->tanggal_pelanggaran))).' '.$bulan[date('n',strtotime(date($key->tanggal_pelanggaran)))].' '.date('Y', strtotime(date($key->tanggal_pelanggaran))),0,0,'L',1);
-                $this->Ln(5);
-                $this->cell(70,5,'Kelas',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(80,5,$key->jenjang.' '.$key->nama_jurusan.' '.$key->nama_kelas,0,0,'L',1);
-                $this->Ln(5);
-                $this->cell(70,5,'Pelanggaran',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->multicell(110,5,$key->deskripsi_pelanggaran,0,'L','L',1);
-                $this->cell(70,5,'Poin',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(110,5,$key->point_pelanggaran,0,'L','L','false');
-                $this->Ln(5);
-                $this->cell(70,5,'Tindak Lanjut',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->multicell(110,5,$key->tindak_lanjut,0,'L','L',1);
-                $this->Ln(5);
-				$this->cell(70,5,'Guru',0,0,'L',1);
-                $this->cell(5,5,':',0,0,'L',1);
-                $this->cell(80,5,$key->nama_guru,0,0,'L',1);
-			}
-                
+$this->SetFont('Arial','',8);
+$this->SetFillColor(255,255,255);		
+$this->SetTextColor(0,0,0);
+$no=1;
+foreach($data as $key) {
+	$this->Cell(10,5,'',0,1);
+	$this->Cell(15,5,$no++.'.',1,0,'C',TRUE);
+	$this->Cell(45,5,$key->nama,1,0,'C',TRUE);
+	$this->Cell(25,5,$key->kelas,1,0,'C',TRUE);
+	$this->Cell(30,5,$key->tanggal_pelanggaran,1,0,'C',TRUE);
+	$this->Cell(55,5,$key->deskripsi_pelanggaran,1,0,'C',TRUE);
+	$this->Cell(20,5,$key->point_pelanggaran,1,0,'C',TRUE);
+}
+				
+               
 	}
 	function Footer()
 	{
+		/*
 		$data = $GLOBALS['data'];
-		//atur posisi 1.5 cm dari bawah
 		$this->SetY(-15);
-		//buat garis horizontal
 		$this->Line(10,$this->GetY(),200,$this->GetY());
-		//Arial italic 9
 		$this->SetFont('Arial','I',9);
         foreach ($data as $row) {
 			$this->Cell(0,10,'Bimbingan dan Konseling '.$row->nama.' ' . date('Y'),0,0,'L');
 		}
-		//nomor halaman
 		$this->Cell(0,10,'Halaman '.$this->PageNo().' dari {nb}',0,0,'R');
+		*/
 	}
 }
  
 $pdf = new Cetak();
+$pdf->SetTitle('Laporan');
 $pdf->AliasNbPages();
 $pdf->AddPage();
-$pdf->Content($data);
+$pdf->Content($data,$tanggal_awal,$tanggal_akhir);
 $pdf->Output();
